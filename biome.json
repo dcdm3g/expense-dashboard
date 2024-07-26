@@ -4,12 +4,23 @@
 		"ignore": ["node_modules/*", ".next/*"]
 	},
 	"organizeImports": {
-		"enabled": true
+		"enabled": false
 	},
 	"linter": {
-		"enabled": true,
 		"rules": {
 			"recommended": true
+		}
+	},
+	"formatter": {
+		"lineWidth": 80,
+		"lineEnding": "lf",
+		"indentStyle": "tab",
+		"indentWidth": 2
+	},
+	"javascript": {
+		"formatter": {
+			"semicolons": "asNeeded",
+			"quoteStyle": "single"
 		}
 	}
 }
