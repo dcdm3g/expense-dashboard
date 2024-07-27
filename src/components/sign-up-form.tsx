@@ -1,52 +1,100 @@
 'use client'
 
-import { useFormState } from 'react-dom'
-import { signUp } from '@/actions/sign-up'
-import { Label } from '@/components/ui/label'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+	Form,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormControl,
+	FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
+const signUpFormSchema = z.object({
+	name: z
+		.string({ required_error: 'Enter your name' })
+		.trim()
+		.min(1, 'Enter your name'),
+	email: z
+		.string({ required_error: 'Enter your email' })
+		.email('Must be a valid email'),
+	password: z
+		.string({ required_error: 'Enter your password' })
+		.min(8, 'Must be at least 8 characters'),
+})
+
+type SignUpFormData = z.infer<typeof signUpFormSchema>
+
 export function SignUpForm() {
-	const [errors, action, isPending] = useFormState(signUp, null)
+	const form = useForm<SignUpFormData>({
+		resolver: zodResolver(signUpFormSchema),
+	})
+
+	function signUp(data: SignUpFormData) {}
 
 	return (
-		<form action={action} className="w-full space-y-4">
-			<div className="space-y-2">
-				<Label htmlFor="name">Your name</Label>
-				<Input id="name" name="name" required />
+		<Form {...form}>
+			<form className="mt-6 grid gap-4" onSubmit={form.handleSubmit(signUp)}>
+				<FormField
+					control={form.control}
+					name="name"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Your full name</FormLabel>
 
-				{errors?.name && (
-					<p className="text-[0.8rem] font-medium text-destructive">
-						{errors.name}
-					</p>
-				)}
-			</div>
+							<FormControl>
+								<Input placeholder="John Doe" {...field} />
+							</FormControl>
 
-			<div className="space-y-2">
-				<Label htmlFor="email">Your email</Label>
-				<Input id="email" name="email" type="email" required />
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
-				{errors?.email && (
-					<p className="text-[0.8rem] font-medium text-destructive">
-						{errors.email}
-					</p>
-				)}
-			</div>
+				<FormField
+					control={form.control}
+					name="email"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Your email</FormLabel>
 
-			<div className="space-y-2">
-				<Label htmlFor="password">Your password</Label>
-				<Input id="password" name="password" type="password" min={8} required />
+							<FormControl>
+								<Input
+									type="email"
+									placeholder="johndoe@example.com"
+									{...field}
+								/>
+							</FormControl>
 
-				{errors?.password && (
-					<p className="text-[0.8rem] font-medium text-destructive">
-						{errors.password}
-					</p>
-				)}
-			</div>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
-			<Button disabled={isPending} className="w-full" size="lg">
-				{isPending ? 'Creating...' : 'Create account'}
-			</Button>
-		</form>
+				<FormField
+					control={form.control}
+					name="password"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Your password</FormLabel>
+
+							<FormControl>
+								<Input type="password" {...field} />
+							</FormControl>
+
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<Button type="submit" size="lg">
+					Create account
+				</Button>
+			</form>
+		</Form>
 	)
 }
