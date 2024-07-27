@@ -9,27 +9,39 @@ import { redirect } from 'next/navigation'
 
 const formSchema = z.object({
 	name: z.string().trim().min(1, 'Must be a valid name'),
-	email: z.string().email('Must be a valid email'),
+	email: z
+		.string()
+		.email('Must be a valid email')
+		.refine(
+			async (email) => {
+				const userWithSameEmail = await prisma.user.findUnique({
+					where: { email },
+				})
+
+				return !userWithSameEmail
+			},
+			{ message: 'Email already in use' },
+		),
 	password: z.string().min(8, 'Must be at least 8 characters'),
 })
 
-type RegisterErrors = {
+interface SignUpErrors {
 	name?: string
 	email?: string
 	password?: string
-} | null
+}
 
 export async function signUp(
-	_: RegisterErrors,
+	_: SignUpErrors | null,
 	formData: FormData,
-): Promise<RegisterErrors> {
+): Promise<SignUpErrors | null> {
 	const fields = {
 		name: formData.get('name'),
 		email: formData.get('email'),
 		password: formData.get('password'),
 	}
 
-	const parsedFields = formSchema.safeParse(fields)
+	const parsedFields = await formSchema.safeParseAsync(fields)
 
 	if (!parsedFields.success) {
 		const { fieldErrors } = parsedFields.error.flatten()
@@ -42,21 +54,12 @@ export async function signUp(
 	}
 
 	const { name, email, password } = parsedFields.data
-	const hashedPassword = await hash(password, 10)
-
-	const userWithSameEmail = await prisma.user.findUnique({
-		where: { email },
-	})
-
-	if (userWithSameEmail) {
-		return { email: 'Email already in use' }
-	}
 
 	const { id: userId } = await prisma.user.create({
 		data: {
 			name,
 			email,
-			password: hashedPassword,
+			password: await hash(password, 10),
 		},
 	})
 
@@ -68,6 +71,4 @@ export async function signUp(
 	})
 
 	redirect('/')
-
-	return null
 }
