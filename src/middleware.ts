@@ -10,13 +10,13 @@ export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl
 
 	const isAuthenticated = accessToken && (await verifyAccessToken(accessToken))
-	const isRegisterOrSignInRoute = ['/register', '/sign-in'].includes(pathname)
+	const isSignUpOrSignInRoute = ['/sign-up', '/sign-in'].includes(pathname)
 
-	if (!isAuthenticated && !isRegisterOrSignInRoute) {
-		return NextResponse.redirect(new URL('/register', request.url))
+	if (!isAuthenticated && !isSignUpOrSignInRoute) {
+		return NextResponse.redirect(new URL('/sign-up', request.url))
 	}
 
-	if (isAuthenticated && isRegisterOrSignInRoute) {
+	if (isAuthenticated && isSignUpOrSignInRoute) {
 		return NextResponse.redirect(new URL('/', request.url))
 	}
 }

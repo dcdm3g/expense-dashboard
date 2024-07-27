@@ -1,13 +1,13 @@
 'use client'
 
 import { useFormState } from 'react-dom'
-import { register } from '@/actions/register'
+import { signUp } from '@/actions/sign-up'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
-export function RegisterForm() {
-	const [errors, action, isPending] = useFormState(register, null)
+export function SignUpForm() {
+	const [errors, action, isPending] = useFormState(signUp, null)
 
 	return (
 		<form action={action} className="w-full space-y-4">

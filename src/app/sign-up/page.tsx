@@ -1,7 +1,7 @@
-import { RegisterForm } from '@/components/register-form'
+import { SignUpForm } from '@/components/sign-up-form'
 import Link from 'next/link'
 
-export default function Register() {
+export default function SignUp() {
 	return (
 		<div className="min-h-screen flex justify-center items-center px-4 py-6">
 			<main className="max-w-md w-full space-y-6">
@@ -18,7 +18,7 @@ export default function Register() {
 					</p>
 				</div>
 
-				<RegisterForm />
+				<SignUpForm />
 			</main>
 		</div>
 	)

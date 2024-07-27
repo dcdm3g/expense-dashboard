@@ -19,7 +19,7 @@ type RegisterErrors = {
 	password?: string
 } | null
 
-export async function register(
+export async function signUp(
 	_: RegisterErrors,
 	formData: FormData,
 ): Promise<RegisterErrors> {
