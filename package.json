@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "docker compose up -d && next dev",
-		"build": "biome check && next build",
+		"build": "biome check && prisma migrate deploy && next build",
 		"start": "next start",
 		"lint": "biome check"
 	},
