@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 import { TRPCProvider } from '@/lib/trpc/react'
 import './globals.css'
 
@@ -19,9 +20,16 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body className={inter.className}>
-				<TRPCProvider>{children}</TRPCProvider>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
+					<TRPCProvider>{children}</TRPCProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	)
