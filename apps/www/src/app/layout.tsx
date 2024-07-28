@@ -9,8 +9,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-	title: 'Expense Dashboard',
-	description: 'Personal expense dashboard with fictitious data.',
+	title: 'Fin.com',
+	description: 'Manage your finances masterfully.',
 }
 
 interface RootLayoutProps {

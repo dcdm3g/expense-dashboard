@@ -1,4 +1,4 @@
-# Expense Dashboard
+# Fin.com
 
 This is an expense dashboard application that has registration, authentication and protected routes and fetches fictitious data from a database.
 
