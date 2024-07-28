@@ -15,7 +15,7 @@ export default function SignUp() {
 			<SignUpForm />
 
 			<p className="mt-10 text-center text-sm">
-				Don't have an account?{' '}
+				Already have an account?{' '}
 				<Link className="underline" href="/sign-in">
 					Sign in
 				</Link>
