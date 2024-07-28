@@ -24,6 +24,7 @@ const signUpFormSchema = z.object({
 		.email('Must be a valid email'),
 	password: z
 		.string({ required_error: 'Enter your password' })
+		.trim()
 		.min(8, 'Must be at least 8 characters'),
 })
 
