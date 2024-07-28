@@ -3,6 +3,8 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { trpc } from '@/lib/trpc/react'
+import { useRouter } from 'next/navigation'
 import {
 	Form,
 	FormField,
@@ -35,11 +37,25 @@ export function SignUpForm() {
 		resolver: zodResolver(signUpFormSchema),
 	})
 
-	function signUp(data: SignUpFormData) {}
+	const { mutateAsync: signUp } = trpc.signUp.useMutation()
+
+	const router = useRouter()
+
+	async function handleSubmit({ name, email, password }: SignUpFormData) {
+		try {
+			await signUp({ name, email, password })
+			router.replace('/')
+		} catch {
+			alert('Oops! Something went wrong')
+		}
+	}
 
 	return (
 		<Form {...form}>
-			<form className="mt-6 grid gap-4" onSubmit={form.handleSubmit(signUp)}>
+			<form
+				className="mt-6 grid gap-4"
+				onSubmit={form.handleSubmit(handleSubmit)}
+			>
 				<FormField
 					control={form.control}
 					name="name"
