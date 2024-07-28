@@ -16,8 +16,8 @@ export default function Login() {
 
 			<p className="mt-10 text-center text-sm">
 				Don't have an account?{' '}
-				<Link className="underline" href="/login">
-          Register
+				<Link className="underline" href="/register">
+					Register
 				</Link>
 			</p>
 		</div>
