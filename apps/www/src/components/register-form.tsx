@@ -1,10 +1,13 @@
 'use client'
 
+import type { TRPCClientErrorLike } from '@trpc/client'
+import type { AppRouter } from '@/lib/trpc/routers/_app'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { trpc } from '@/lib/trpc/react-context'
+import { trpc } from '@/lib/trpc/react'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 import {
 	Form,
 	FormField,
@@ -37,15 +40,21 @@ export function RegisterForm() {
 		resolver: zodResolver(registerFormSchema),
 	})
 
-	const { mutateAsync: register } = trpc.register.useMutation()
+	const { mutateAsync: register, error } = trpc.register.useMutation()
 	const router = useRouter()
 
 	async function handleSubmit({ name, email, password }: RegisterFormFields) {
 		try {
 			await register({ name, email, password })
 			router.replace('/')
-		} catch {
-			alert('Oops! Something went wrong')
+		} catch (error) {
+			const { data, message } = error as TRPCClientErrorLike<AppRouter>
+	
+			if (data?.code !== 'INTERNAL_SERVER_ERROR') {
+				return toast.error(message)
+			}
+
+			toast.error('Oops, something went wrong! Try again later.')
 		}
 	}
 

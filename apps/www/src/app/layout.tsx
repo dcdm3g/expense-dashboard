@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
-import { TRPCProvider } from '@/lib/trpc/react-context'
+import { TRPCProvider } from '@/lib/trpc/react'
+import { Toaster } from 'sonner'
 import './globals.css'
 
 const inter = Inter({
@@ -28,7 +29,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					enableSystem
 					disableTransitionOnChange
 				>
-					<TRPCProvider>{children}</TRPCProvider>
+					<TRPCProvider>
+						{children}
+						<Toaster />
+					</TRPCProvider>
 				</ThemeProvider>
 			</body>
 		</html>
