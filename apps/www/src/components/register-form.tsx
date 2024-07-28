@@ -16,7 +16,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
-const signUpFormSchema = z.object({
+const registerFormSchema = z.object({
 	name: z
 		.string({ required_error: 'Enter your name' })
 		.trim()
@@ -30,17 +30,17 @@ const signUpFormSchema = z.object({
 		.min(8, 'Must be at least 8 characters'),
 })
 
-type SignUpFormData = z.infer<typeof signUpFormSchema>
+type RegisterFormFields = z.infer<typeof registerFormSchema>
 
 export function RegisterForm() {
-	const form = useForm<SignUpFormData>({
-		resolver: zodResolver(signUpFormSchema),
+	const form = useForm<RegisterFormFields>({
+		resolver: zodResolver(registerFormSchema),
 	})
 
 	const { mutateAsync: register } = trpc.register.useMutation()
 	const router = useRouter()
 
-	async function handleSubmit({ name, email, password }: SignUpFormData) {
+	async function handleSubmit({ name, email, password }: RegisterFormFields) {
 		try {
 			await register({ name, email, password })
 			router.replace('/')
