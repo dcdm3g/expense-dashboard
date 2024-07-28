@@ -3,7 +3,7 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { trpc } from '@/lib/trpc/react'
+import { trpc } from '@/lib/trpc/react-context'
 import { useRouter } from 'next/navigation'
 import {
 	Form,
@@ -32,18 +32,17 @@ const signUpFormSchema = z.object({
 
 type SignUpFormData = z.infer<typeof signUpFormSchema>
 
-export function SignUpForm() {
+export function RegisterForm() {
 	const form = useForm<SignUpFormData>({
 		resolver: zodResolver(signUpFormSchema),
 	})
 
-	const { mutateAsync: signUp } = trpc.signUp.useMutation()
-
+	const { mutateAsync: register } = trpc.register.useMutation()
 	const router = useRouter()
 
 	async function handleSubmit({ name, email, password }: SignUpFormData) {
 		try {
-			await signUp({ name, email, password })
+			await register({ name, email, password })
 			router.replace('/')
 		} catch {
 			alert('Oops! Something went wrong')

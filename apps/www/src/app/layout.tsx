@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
-import { TRPCProvider } from '@/lib/trpc/react'
+import { TRPCProvider } from '@/lib/trpc/react-context'
 import './globals.css'
 
 const inter = Inter({

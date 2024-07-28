@@ -1,7 +1,7 @@
-import { SignUpForm } from '@/components/sign-up-form'
+import { RegisterForm } from '@/components/register-form'
 import Link from 'next/link'
 
-export default function SignUp() {
+export default function Register() {
 	return (
 		<div className="max-w-md w-full">
 			<div className="grid gap-2 text-center">
@@ -12,12 +12,12 @@ export default function SignUp() {
 				</p>
 			</div>
 
-			<SignUpForm />
+			<RegisterForm />
 
 			<p className="mt-10 text-center text-sm">
 				Already have an account?{' '}
-				<Link className="underline" href="/sign-in">
-					Sign in
+				<Link className="underline" href="/login">
+					Log in
 				</Link>
 			</p>
 		</div>

@@ -7,10 +7,9 @@ import { TRPCError } from '@trpc/server'
 import { hash } from 'bcrypt'
 import { generateAccessToken } from '@/utils/generate-access-token'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 
-export const router = createTRPCRouter({
-	signUp: procedure
+export const authenticationRouter = createTRPCRouter({
+	register: procedure
 		.input(
 			z.object({
 				name: z.string().trim().min(1),
@@ -32,7 +31,7 @@ export const router = createTRPCRouter({
 				})
 			}
 
-			const { id: userId } = await prisma.user.create({
+			const { id } = await prisma.user.create({
 				data: {
 					name,
 					email,
@@ -40,7 +39,7 @@ export const router = createTRPCRouter({
 				},
 			})
 
-			const accessToken = await generateAccessToken(userId)
+			const accessToken = await generateAccessToken(id)
 
 			cookies().set('access_token', accessToken, {
 				httpOnly: true,
@@ -48,5 +47,3 @@ export const router = createTRPCRouter({
 			})
 		}),
 })
-
-export type Router = typeof router

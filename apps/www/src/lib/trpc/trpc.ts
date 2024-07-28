@@ -9,6 +9,7 @@ export const {
 	router: createTRPCRouter,
 	procedure,
 	createCallerFactory,
+	mergeRouters,
 } = initTRPC.context<typeof createTRPCContext>().create({
 	transformer: SuperJSON,
 })
