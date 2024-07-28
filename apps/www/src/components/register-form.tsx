@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-react'
 
 const registerFormSchema = z.object({
 	name: z
@@ -40,7 +41,7 @@ export function RegisterForm() {
 		resolver: zodResolver(registerFormSchema),
 	})
 
-	const { mutateAsync: register, error } = trpc.register.useMutation()
+	const { mutateAsync: register, isPending } = trpc.register.useMutation()
 	const router = useRouter()
 
 	async function handleSubmit({ name, email, password }: RegisterFormFields) {
@@ -49,7 +50,7 @@ export function RegisterForm() {
 			router.replace('/')
 		} catch (error) {
 			const { data, message } = error as TRPCClientErrorLike<AppRouter>
-	
+
 			if (data?.code !== 'INTERNAL_SERVER_ERROR') {
 				return toast.error(message)
 			}
@@ -116,8 +117,15 @@ export function RegisterForm() {
 					)}
 				/>
 
-				<Button type="submit" size="lg">
-					Create account
+				<Button disabled={isPending} type="submit" size="lg">
+					{isPending ? (
+						<>
+							<Loader2 className="size-4 mr-2 animate-spin" />
+							Please wait
+						</>
+					) : (
+						'Create account'
+					)}
 				</Button>
 			</form>
 		</Form>
