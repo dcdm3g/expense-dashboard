@@ -3,7 +3,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
-
 const data = [
 	{
 		name: 'Fixed Income',
