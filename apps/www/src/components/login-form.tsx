@@ -27,7 +27,7 @@ const loginFormSchema = z.object({
 	password: z
 		.string({ required_error: 'Enter your password' })
 		.trim()
-		.min(8, 'Must be at least 8 characters'),
+		.min(1, 'Enter your password'),
 })
 
 type LoginFormFields = z.infer<typeof loginFormSchema>
