@@ -8,10 +8,51 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   name     String
-  email    String @unique
+  email    String  @unique
   password String
+  balance  Decimal @db.Decimal(19, 4)
+
+  invoices    Invoice[]
+  goals       Goal[]
+  investments Investment[]
 
   @@map("users")
+}
+
+model Invoice {
+  id      String @id @default(uuid())
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("invoices")
+}
+
+model Goal {
+  id      String @id @default(uuid())
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("goals")
+}
+
+enum InvestmentCategory {
+  FIXED_INCOME
+  EQUITIES
+  REAL_ESTATE
+  MUTUAL_FUNDS
+  CRYPTOCURRENCIES
+  COMMODITIES
+}
+
+model Investment {
+  id         String             @id @default(uuid())
+  amount     Decimal            @db.Decimal(19, 4)
+  category   InvestmentCategory
+  created_at DateTime           @default(now())
+  user       User               @relation(fields: [user_id], references: [id])
+  user_id    String
+
+  @@map("investments")
 }
