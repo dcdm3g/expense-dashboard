@@ -12,7 +12,7 @@ model User {
   name     String
   email    String  @unique
   password String
-  balance  Decimal @db.Decimal(19, 4)
+  balance  Decimal @db.Decimal(19, 4) @default(0)
 
   invoices    Invoice[]
   goals       Goal[]
