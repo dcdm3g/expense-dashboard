@@ -109,7 +109,7 @@ export function RegisterForm() {
 							<FormLabel>Your password</FormLabel>
 
 							<FormControl>
-								<Input type="password" {...field} />
+								<Input type="password" placeholder="••••••••••••" {...field} />
 							</FormControl>
 
 							<FormMessage />
