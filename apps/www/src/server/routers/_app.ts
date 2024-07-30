@@ -9,7 +9,7 @@ export const appRouter = mergeRouters(
 	authenticationRouter,
 	profileRouter,
 	investmentsRouter,
-	investmentsRouter,
+	invoicesRouter,
 	goalsRouter,
 )
 
