@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { verifyAccessToken } from '@/utils/verify-access-token'
 
 export const config = {
-	matcher: '/((?!api|_next/static|_next/image|favicon.ico).*)',
+	matcher: '/((?!api|_next/static|_next/image|favicon.ico|robots.txt).*)',
 }
 
 export async function middleware(request: NextRequest) {
