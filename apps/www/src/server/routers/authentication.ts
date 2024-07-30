@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { z } from 'zod'
-import { createTRPCRouter, procedure } from '@/server/trpc'
+import { createTRPCRouter, publicProcedure } from '@/server/trpc'
 import { prisma } from '@/lib/prisma'
 import { TRPCError } from '@trpc/server'
 import { generateAccessToken } from '@/utils/generate-access-token'
@@ -9,7 +9,7 @@ import { cookies } from 'next/headers'
 import bcrypt from 'bcrypt'
 
 export const authenticationRouter = createTRPCRouter({
-	register: procedure
+	register: publicProcedure
 		.input(
 			z.object({
 				name: z.string().trim().min(1),
@@ -46,7 +46,7 @@ export const authenticationRouter = createTRPCRouter({
 				maxAge: 60 * 60 * 24 * 90, // 90 days
 			})
 		}),
-	login: procedure
+	login: publicProcedure
 		.input(
 			z.object({
 				email: z.string().email(),

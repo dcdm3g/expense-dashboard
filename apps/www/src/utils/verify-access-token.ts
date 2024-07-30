@@ -12,6 +12,8 @@ export async function verifyAccessToken(accessToken: string) {
 		return verifiedAccessToken.payload as {
 			jti: string
 			iat: number
+			sub: string
+			exp: number
 		}
 	} catch (error) {
 		return null

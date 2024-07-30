@@ -1,14 +1,12 @@
-'use client'
+import { trpc } from '@/lib/trpc/server'
+import { motion } from '@/lib/framer-motion'
 
-import { motion } from 'framer-motion'
+export async function UserGreeting() {
+	const { name } = await trpc.getUserName()
 
-const name = 'Davi Melo'
-const text = `Hello ${name}`
-
-export function UserGreeting() {
 	return (
 		<h1 className="text-4xl font-bold tracking-tight">
-			{text.split(' ').map((word, index) => (
+			{`Hello ${name}`.split(' ').map((word, index) => (
 				<motion.span
 					key={index}
 					className="text-4xl font-bold"
