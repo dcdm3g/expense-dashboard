@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 import { LogoutButton } from '@/components/logout-button'
 import { ThemeSwitcher } from '@/components/theme-switcher'
 import { UserGreeting } from '@/components/user-greeting'
@@ -21,15 +23,37 @@ export default function Home() {
 
 				<div className="flex flex-col gap-4">
 					<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-						<CurrentBalanceCard />
-						<InvestmentsCard />
-						<InvoicesCard />
-						<GoalsCard />
+						<Suspense fallback={<Skeleton className="h-[7.125rem]" />}>
+							<CurrentBalanceCard />
+						</Suspense>
+
+						<Suspense fallback={<Skeleton className="h-[7.125rem]" />}>
+							<InvestmentsCard />
+						</Suspense>
+
+						<Suspense fallback={<Skeleton className="h-[7.125rem]" />}>
+							<InvoicesCard />
+						</Suspense>
+
+						<Suspense fallback={<Skeleton className="h-[7.125rem]" />}>
+							<GoalsCard />
+						</Suspense>
 					</div>
 
 					<div className="grid gap-4 lg:grid-cols-7">
-						<InvestmentCategoriesCard />
-						<RecentInvestmentsCard />
+						<Suspense
+							fallback={<Skeleton className="h-[28rem] lg:col-span-4" />}
+						>
+							<InvestmentCategoriesCard />
+						</Suspense>
+
+						<Suspense
+							fallback={
+								<Skeleton className="h-[27.625rem] lg:h-full lg:col-span-3" />
+							}
+						>
+							<RecentInvestmentsCard />
+						</Suspense>
 					</div>
 				</div>
 			</main>
