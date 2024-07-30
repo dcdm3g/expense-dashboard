@@ -11,7 +11,7 @@ This is an expense dashboard application that has registration, authentication a
 - **BiomeJS** as the formatter and linter
 - **PostgreSQL** as the database
 - **Prisma** as the ORM
-- **tRPC** for server-side interactions
+- **tRPC** for server-side operations
 - **Zod** for validation
 - **shadcn/ui** for beautifull and re-usable components
 
