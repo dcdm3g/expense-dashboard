@@ -2,7 +2,6 @@ import 'server-only'
 
 import { z } from 'zod'
 import { createTRPCRouter, publicProcedure } from '@/server/trpc'
-import { prisma } from '@/lib/prisma'
 import { TRPCError } from '@trpc/server'
 import { generateAccessToken } from '@/utils/generate-access-token'
 import { cookies } from 'next/headers'
@@ -17,10 +16,10 @@ export const authenticationRouter = createTRPCRouter({
 				password: z.string().trim().min(8),
 			}),
 		)
-		.mutation(async ({ input }) => {
+		.mutation(async ({ ctx, input }) => {
 			const { name, email, password } = input
 
-			const userFromEmail = await prisma.user.findUnique({
+			const userFromEmail = await ctx.prisma.user.findUnique({
 				where: { email },
 			})
 
@@ -31,7 +30,7 @@ export const authenticationRouter = createTRPCRouter({
 				})
 			}
 
-			const { id } = await prisma.user.create({
+			const { id } = await ctx.prisma.user.create({
 				data: {
 					name,
 					email,
@@ -53,10 +52,10 @@ export const authenticationRouter = createTRPCRouter({
 				password: z.string().trim().min(8),
 			}),
 		)
-		.mutation(async ({ input }) => {
+		.mutation(async ({ ctx, input }) => {
 			const { email, password } = input
 
-			const userFromEmail = await prisma.user.findUnique({
+			const userFromEmail = await ctx.prisma.user.findUnique({
 				where: { email },
 			})
 

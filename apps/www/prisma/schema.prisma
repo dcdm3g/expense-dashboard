@@ -8,31 +8,24 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  name     String
-  email    String  @unique
-  password String
-  balance  Decimal @db.Decimal(19, 4) @default(0)
-
-  invoices    Invoice[]
-  goals       Goal[]
-  investments Investment[]
+  id                 String  @id @default(uuid())
+  name               String
+  email              String  @unique
+  password           String
+  balance            Decimal @default(7221.89) @db.Decimal(19, 4)
+  investment_balance Decimal @default(2647.41) @db.Decimal(19, 4)
 
   @@map("users")
 }
 
 model Invoice {
-  id      String @id @default(uuid())
-  user    User   @relation(fields: [user_id], references: [id])
-  user_id String
+  id String @id @default(uuid())
 
   @@map("invoices")
 }
 
 model Goal {
-  id      String @id @default(uuid())
-  user    User   @relation(fields: [user_id], references: [id])
-  user_id String
+  id String @id @default(uuid())
 
   @@map("goals")
 }
@@ -51,8 +44,6 @@ model Investment {
   amount     Decimal            @db.Decimal(19, 4)
   category   InvestmentCategory
   created_at DateTime           @default(now())
-  user       User               @relation(fields: [user_id], references: [id])
-  user_id    String
 
   @@map("investments")
 }

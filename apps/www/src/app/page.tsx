@@ -5,7 +5,7 @@ import { CurrentBalanceCard } from '@/components/current-balance-card'
 import { InvestmentsCard } from '@/components/investments-card'
 import { InvoicesCard } from '@/components/invoices-card'
 import { GoalsCard } from '@/components/goals-card'
-import { InvestmentCategoriesChart } from '@/components/investment-categories-chart'
+import { InvestmentCategoriesCard } from '@/components/investment-categories-card'
 import { RecentInvestmentsCard } from '@/components/recent-investments-card'
 
 export default function Home() {
@@ -28,7 +28,7 @@ export default function Home() {
 					</div>
 
 					<div className="grid gap-4 lg:grid-cols-7">
-						<InvestmentCategoriesChart />
+						<InvestmentCategoriesCard />
 						<RecentInvestmentsCard />
 					</div>
 				</div>

@@ -20,6 +20,6 @@ This is an expense dashboard application that has registration, authentication a
 - [x] Users must be able to register using name, email and password
 - [x] Users must be able to authenticate using email and password
 - [x] Users must be able to see a welcome message with their name on the dashboard page
-- [ ] Users must be able to see ficticious information on the dashboard page
+- [x] Users must be able to see ficticious information on the dashboard page
 - [x] Unauthenticated users must not be able to access the dashboard page
 - [x] Users must be authenticated via JWTs

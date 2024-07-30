@@ -3,6 +3,7 @@ import 'server-only'
 import { createHydrationHelpers } from '@trpc/react-query/rsc'
 import { headers } from 'next/headers'
 import { cache } from 'react'
+import { prisma } from '@/lib/prisma'
 
 import { type AppRouter, appRouter } from '@/server/routers/_app'
 import { createCallerFactory } from '@/server/trpc'
@@ -15,6 +16,7 @@ const createContext = cache(() => {
 
 	return createTRPCContext({
 		headers: heads,
+		prisma,
 	})
 })
 
