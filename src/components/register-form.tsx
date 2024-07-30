@@ -1,133 +1,76 @@
 'use client'
 
-import type { TRPCClientErrorLike } from '@trpc/client'
-import type { AppRouter } from '@/server/routers/_app'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { trpc } from '@/lib/trpc/react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
-import {
-	Form,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormControl,
-	FormMessage,
-} from '@/components/ui/form'
+import { useFormState } from 'react-dom'
+import { register } from '@/actions/register'
+import { cn } from '@/utils/cn'
+import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Loader2 } from 'lucide-react'
-
-const registerFormSchema = z.object({
-	name: z
-		.string({ required_error: 'Enter your name' })
-		.trim()
-		.min(1, 'Enter your name'),
-	email: z
-		.string({ required_error: 'Enter your email' })
-		.email('Must be a valid email'),
-	password: z
-		.string({ required_error: 'Enter your password' })
-		.trim()
-		.min(8, 'Must be at least 8 characters'),
-})
-
-type RegisterFormFields = z.infer<typeof registerFormSchema>
+import { SubmitButton } from '@/components/submit-button'
 
 export function RegisterForm() {
-	const form = useForm<RegisterFormFields>({
-		resolver: zodResolver(registerFormSchema),
-	})
-
-	const { mutateAsync: register, isPending } = trpc.register.useMutation()
-	const router = useRouter()
-
-	async function handleSubmit({ name, email, password }: RegisterFormFields) {
-		try {
-			await register({ name, email, password })
-			router.replace('/')
-		} catch (error) {
-			const { data, message } = error as TRPCClientErrorLike<AppRouter>
-
-			if (data?.code !== 'INTERNAL_SERVER_ERROR') {
-				return toast.error(message)
-			}
-
-			toast.error('Oops, something went wrong! Try again later.')
-		}
-	}
+	const [errors, dispatch, isPending] = useFormState(register, {})
 
 	return (
-		<Form {...form}>
-			<form
-				className="mt-6 grid gap-4"
-				onSubmit={form.handleSubmit(handleSubmit)}
-			>
-				<FormField
-					control={form.control}
-					name="name"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Your name</FormLabel>
+		<form action={dispatch} className="mt-6 grid gap-4">
+			<div className="space-y-2">
+				<Label htmlFor="name" className={cn(errors.name && 'text-destructive')}>
+					Your name
+				</Label>
 
-							<FormControl>
-								<Input placeholder="John Doe" {...field} />
-							</FormControl>
+				<Input id="name" name="name" placeholder="John Doe" />
 
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				{errors.name?.map((error) => (
+					<p key={error} className="text-sm font-meidum text-destructive">
+						{error}
+					</p>
+				))}
+			</div>
 
-				<FormField
-					control={form.control}
+			<div className="space-y-2">
+				<Label
+					htmlFor="email"
+					className={cn(errors.email && 'text-destructive')}
+				>
+					Your email
+				</Label>
+
+				<Input
+					id="email"
 					name="email"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Your email</FormLabel>
-
-							<FormControl>
-								<Input
-									type="email"
-									placeholder="johndoe@example.com"
-									{...field}
-								/>
-							</FormControl>
-
-							<FormMessage />
-						</FormItem>
-					)}
+					type="email"
+					placeholder="johndoe@example.com"
 				/>
 
-				<FormField
-					control={form.control}
+				{errors.email?.map((error) => (
+					<p key={error} className="text-sm font-meidum text-destructive">
+						{error}
+					</p>
+				))}
+			</div>
+
+			<div className="space-y-2">
+				<Label
+					htmlFor="password"
+					className={cn(errors.password && 'text-destructive')}
+				>
+					Your password
+				</Label>
+
+				<Input
+					id="password"
 					name="password"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Your password</FormLabel>
-
-							<FormControl>
-								<Input type="password" placeholder="••••••••••••" {...field} />
-							</FormControl>
-
-							<FormMessage />
-						</FormItem>
-					)}
+					type="password"
+					placeholder="••••••••••••"
 				/>
 
-				<Button disabled={isPending} type="submit" size="lg">
-					{isPending ? (
-						<>
-							<Loader2 className="size-4 mr-2 animate-spin" />
-							Please wait
-						</>
-					) : (
-						'Create account'
-					)}
-				</Button>
-			</form>
-		</Form>
+				{errors.password?.map((error) => (
+					<p key={error} className="text-sm font-meidum text-destructive">
+						{error}
+					</p>
+				))}
+			</div>
+
+			<SubmitButton>Create account</SubmitButton>
+		</form>
 	)
 }

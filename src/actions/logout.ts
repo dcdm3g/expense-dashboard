@@ -7,4 +7,3 @@ export async function logout() {
 	cookies().delete('access_token')
 	redirect('/login')
 }
-

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { LogOut, Loader2 } from 'lucide-react'
-import { logout } from '@/actions'
+import { logout } from '@/actions/logout'
 
 export function LogoutButton() {
 	const [isPending, setIsPending] = useState(false)
