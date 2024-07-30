@@ -87,7 +87,4 @@ export const authenticationRouter = createTRPCRouter({
 				maxAge: 60 * 60 * 24 * 90, // 90 days
 			})
 		}),
-	logout: procedure.mutation(() => {
-		cookies().delete('access_token')
-	}),
 })
