@@ -6,6 +6,8 @@ import { formatMonetary } from '@/utils/format-monetary'
 
 export const profileRouter = createTRPCRouter({
 	getUserName: authedProcedure.query(async ({ ctx }) => {
+		await new Promise((resolve) => setTimeout(resolve, 5000))
+
 		const userFromId = await ctx.prisma.user.findUnique({
 			where: {
 				id: ctx.userId,
