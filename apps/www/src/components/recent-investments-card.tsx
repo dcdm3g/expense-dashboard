@@ -35,9 +35,7 @@ export async function RecentInvestmentsCard() {
 								<p className="text-sm text-muted-foreground">{created_at}</p>
 							</div>
 
-							<div className="ml-auto font-medium">
-								{amount}
-							</div>
+							<div className="ml-auto font-medium">{amount}</div>
 						</div>
 					))}
 				</div>

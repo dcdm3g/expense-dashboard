@@ -9,8 +9,7 @@ function handler(req: NextRequest) {
 		endpoint: '/api/trpc',
 		req,
 		router: appRouter,
-		createContext: () =>
-			createTRPCContext({ headers: req.headers, prisma }),
+		createContext: () => createTRPCContext({ headers: req.headers, prisma }),
 	})
 }
 
