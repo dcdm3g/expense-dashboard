@@ -4,7 +4,7 @@ import { createTRPCRouter, authedProcedure } from '@/server/trpc'
 import { TRPCError } from '@trpc/server'
 import { formatMonetary } from '@/utils/format-monetary'
 
-export const profileRouter = createTRPCRouter({
+export const accountRouter = createTRPCRouter({
 	getUserName: authedProcedure.query(async ({ ctx }) => {
 		const userFromId = await ctx.prisma.user.findUnique({
 			where: {
