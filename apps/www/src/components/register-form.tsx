@@ -1,7 +1,7 @@
 'use client'
 
 import type { TRPCClientErrorLike } from '@trpc/client'
-import type { AppRouter } from '@/lib/trpc/routers/_app'
+import type { AppRouter } from '@/server/routers/_app'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'

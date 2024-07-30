@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { z } from 'zod'
-import { createTRPCRouter, procedure } from '@/lib/trpc/trpc'
+import { createTRPCRouter, procedure } from '@/server/trpc'
 import { prisma } from '@/lib/prisma'
 import { TRPCError } from '@trpc/server'
 import { generateAccessToken } from '@/utils/generate-access-token'
@@ -87,4 +87,7 @@ export const authenticationRouter = createTRPCRouter({
 				maxAge: 60 * 60 * 24 * 90, // 90 days
 			})
 		}),
+	logout: procedure.mutation(() => {
+		cookies().delete('access_token')
+	}),
 })
