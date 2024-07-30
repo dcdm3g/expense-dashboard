@@ -20,9 +20,9 @@ export default function Home() {
 
 			<main className="p-4 md:p-8 md:pt-6 flex flex-col gap-6">
 				<Suspense fallback={<Skeleton className="h-10 w-72" />}>
-					<UserGreeting  />
+					<UserGreeting />
 				</Suspense>
-				
+
 				<div className="flex flex-col gap-4">
 					<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 						<Suspense fallback={<Skeleton className="h-[7.125rem]" />}>
