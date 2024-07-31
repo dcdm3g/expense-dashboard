@@ -42,7 +42,10 @@ export const investmentsRouter = createTRPCRouter({
 	}),
 	getRecentInvestments: procedure.query(async ({ ctx }) => {
 		const [latestInvestments, investmentThisMonthCount] = await Promise.all([
-			await ctx.prisma.investment.findMany({ take: 5 }),
+			await ctx.prisma.investment.findMany({
+				take: 5,
+				orderBy: { created_at: 'desc' },
+			}),
 			await ctx.prisma.investment.count({
 				where: {
 					created_at: {
