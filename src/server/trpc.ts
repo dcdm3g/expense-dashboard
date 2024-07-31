@@ -5,16 +5,13 @@ import { verifyAccessToken } from '@/utils/verify-access-token'
 import { TRPCError } from '@trpc/server'
 import SuperJSON from 'superjson'
 
-export const {
-	router: createTRPCRouter,
-	procedure: publicProcedure,
-	createCallerFactory,
-	mergeRouters,
-} = initTRPC.context<typeof createTRPCContext>().create({
+const t = initTRPC.context<typeof createTRPCContext>().create({
 	transformer: SuperJSON,
 })
 
-export const authedProcedure = publicProcedure.use(async (opts) => {
+export const { router: createTRPCRouter, createCallerFactory, mergeRouters } = t
+
+export const procedure = t.procedure.use(async (opts) => {
 	const accessToken = cookies().get('access_token')?.value
 
 	const verifiedAccessToken =

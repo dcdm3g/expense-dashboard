@@ -1,13 +1,13 @@
 import 'server-only'
 
-import { createTRPCRouter, authedProcedure } from '@/server/trpc'
+import { createTRPCRouter, procedure } from '@/server/trpc'
 import { TRPCError } from '@trpc/server'
 import { formatMonetary } from '@/utils/format-monetary'
 import { formatInvestmentCategory } from '@/utils/format-investment-category'
 import { startOfMonth, endOfMonth, formatDistanceStrict } from 'date-fns'
 
 export const investmentsRouter = createTRPCRouter({
-	getInvestmentBalance: authedProcedure.query(async ({ ctx }) => {
+	getInvestmentBalance: procedure.query(async ({ ctx }) => {
 		const userFromId = await ctx.prisma.user.findUnique({
 			where: {
 				id: ctx.userId,
@@ -25,7 +25,7 @@ export const investmentsRouter = createTRPCRouter({
 			investmentBalance: formatMonetary(Number(userFromId.investment_balance)),
 		}
 	}),
-	getInvestmentCategories: authedProcedure.query(async ({ ctx }) => {
+	getInvestmentCategories: procedure.query(async ({ ctx }) => {
 		const investmentCategories = await ctx.prisma.investment.groupBy({
 			by: ['category'],
 			_sum: {
@@ -40,7 +40,7 @@ export const investmentsRouter = createTRPCRouter({
 			})),
 		}
 	}),
-	getRecentInvestments: authedProcedure.query(async ({ ctx }) => {
+	getRecentInvestments: procedure.query(async ({ ctx }) => {
 		const [latestInvestments, investmentThisMonthCount] = await Promise.all([
 			await ctx.prisma.investment.findMany({ take: 5 }),
 			await ctx.prisma.investment.count({
