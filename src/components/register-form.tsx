@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { SubmitButton } from '@/components/submit-button'
 
 export function RegisterForm() {
-	const [errors, dispatch, isPending] = useFormState(register, {})
+	const [errors, dispatch] = useFormState(register, {})
 
 	return (
 		<form action={dispatch} className="mt-6 grid gap-4">
