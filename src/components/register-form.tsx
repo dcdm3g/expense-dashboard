@@ -17,7 +17,7 @@ export function RegisterForm() {
 					Your name
 				</Label>
 
-				<Input id="name" name="name" placeholder="John Doe" />
+				<Input id="name" name="name" placeholder="John Doe" required />
 
 				{errors.name?.map((error) => (
 					<p key={error} className="text-sm font-meidum text-destructive">
@@ -39,6 +39,7 @@ export function RegisterForm() {
 					name="email"
 					type="email"
 					placeholder="johndoe@example.com"
+					required
 				/>
 
 				{errors.email?.map((error) => (
@@ -61,6 +62,8 @@ export function RegisterForm() {
 					name="password"
 					type="password"
 					placeholder="••••••••••••"
+					minLength={8}
+					required
 				/>
 
 				{errors.password?.map((error) => (

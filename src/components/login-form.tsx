@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { SubmitButton } from '@/components/submit-button'
 
 export function LoginForm() {
-	const [errors, dispatch, isPending] = useFormState(login, {})
+	const [errors, dispatch] = useFormState(login, {})
 
 	return (
 		<form action={dispatch} className="mt-6 grid gap-4">
@@ -25,6 +25,7 @@ export function LoginForm() {
 					name="email"
 					type="email"
 					placeholder="johndoe@example.com"
+					required
 				/>
 
 				{errors.email?.map((error) => (
@@ -47,6 +48,8 @@ export function LoginForm() {
 					name="password"
 					type="password"
 					placeholder="••••••••••••"
+					minLength={8}
+					required
 				/>
 
 				{errors.password?.map((error) => (
